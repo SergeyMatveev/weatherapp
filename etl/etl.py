@@ -8,14 +8,22 @@ def connect_to_mongo():
     return MongoClient("mongodb://mongo:27017/")
 
 
-def connect_to_mysql():
-    # Создание подключения к MySQL
-    return mysql.connector.connect(
-        host="mysql",
-        user="root",
-        password="password",
-        database="weather"
-    )
+def connect_to_mysql(retry_num=5, delay=5):
+    # Попытка создания подключения к MySQL с заданным количеством повторов и задержкой
+    for i in range(retry_num):
+        try:
+            return mysql.connector.connect(
+                host="mysql",
+                user="root",
+                password="password",
+                database="weather"
+            )
+        except mysql.connector.Error as e:
+            print(f"Ошибка подключения к MySQL: {e}")
+            print(f"Повторное подключение через {delay} секунд(ы)...")
+            time.sleep(delay)
+    # Если подключение не удалось, выбросить исключение
+    raise Exception("Не удалось подключиться к MySQL")
 
 
 def fetch_from_mongo(mongo_collection):
@@ -31,11 +39,14 @@ def insert_into_mysql(mysql_cursor, name, temp):
 
 def main():
     mongo_client = connect_to_mongo()
-    mysql_conn = connect_to_mysql()
-    mongo_db = mongo_client["weather_database"]
-    mongo_collection = mongo_db["weather_data"]
+    mysql_conn = None
 
     try:
+        # Попытка подключения к MySQL
+        mysql_conn = connect_to_mysql()
+        mongo_db = mongo_client["weather_database"]
+        mongo_collection = mongo_db["weather_data"]
+
         while True:  # Начало бесконечного цикла
             last_record = fetch_from_mongo(mongo_collection)
             with mysql_conn.cursor() as mysql_cursor:
@@ -56,7 +67,8 @@ def main():
         print(f"An error occurred: {e}")
     finally:
         # Закрытие подключений
-        mysql_conn.close()
+        if mysql_conn:
+            mysql_conn.close()
         mongo_client.close()
 
 
