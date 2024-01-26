@@ -5,7 +5,7 @@ from pymongo import MongoClient
 import sys
 
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s')
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 
 
 api_key = '079025fd2d352a88e95dc71b9a51efcc'
