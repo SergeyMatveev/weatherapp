@@ -1,4 +1,5 @@
 import requests
+import time
 from pymongo import MongoClient
 
 api_key = '079025fd2d352a88e95dc71b9a51efcc'
@@ -23,5 +24,7 @@ def send_to_mongodb(data):
 
 
 if __name__ == "__main__":
-    weather_data = get_weather_data(url)
-    send_to_mongodb(weather_data)
+    while True:
+        weather_data = get_weather_data(url)
+        send_to_mongodb(weather_data)
+        time.sleep(300)  # Пауза в 300 секунд (5 минут)
