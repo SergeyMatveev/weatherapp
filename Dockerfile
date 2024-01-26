@@ -1,10 +1,8 @@
-FROM python:3.8-slim
+FROM python:3.8
 
 WORKDIR /app
+COPY . /app
 
-COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
-COPY logger.py /app
-
-CMD ["python", "./logger.py"]
+CMD ["python", "app.py"]
