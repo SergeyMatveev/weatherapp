@@ -1,3 +1,13 @@
+FROM python:3.8-slim
+
+WORKDIR /app
+
+COPY logger.py /app
+
+CMD ["python", "./logger.py"]
+
+
+'''
 # Используйте официальный образ Python как базовый
 FROM python:3.8
 
@@ -15,3 +25,4 @@ COPY . .
 
 # Команда для запуска приложения
 CMD ["python", "./app.py"]
+'''
