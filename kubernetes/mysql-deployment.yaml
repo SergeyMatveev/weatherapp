@@ -25,7 +25,12 @@ spec:
         volumeMounts:
         - name: mysql-data
           mountPath: /var/lib/mysql
+        - name: init-sql
+          mountPath: /docker-entrypoint-initdb.d
       volumes:
       - name: mysql-data
         persistentVolumeClaim:
           claimName: mysql-pvc
+      - name: init-sql
+        configMap:
+          name: init-sql
