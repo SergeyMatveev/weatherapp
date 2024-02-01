@@ -1,0 +1,14 @@
+steps:
+  # collecting files
+  - name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/SergeyMatveev/weatherapp.git']
+  
+ # Set up kubectl
+  - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud container clusters get-credentials my-kukube-cluster --zone europe-west3-c --project bubbly-pillar-410707
+        cd kubernetes
+        kubectl apply -f .
