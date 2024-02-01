@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: etl
-        image: matveevsergey/weatherapp_etl:1
+        image: europe-west1-docker.pkg.dev/bubbly-pillar-410707/ourbestrepo/etl
         env:
           - name: MONGO_URI
             value: "mongodb://mongo:27017/"
