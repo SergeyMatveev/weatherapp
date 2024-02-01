@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-collector
+  template:
+    metadata:
+      labels:
+        app: data-collector
+    spec:
+      containers:
+      - name: app
+        image: matveevsergey/weatherapp_data_collection:1
+        env:
+          - name: MONGO_URI
+            value: "mongodb://mongo:27017/"
+        imagePullPolicy: IfNotPresent
