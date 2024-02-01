@@ -2,6 +2,14 @@ steps:
   # collecting files
   - name: 'gcr.io/cloud-builders/git'
     args: ['clone', 'https://github.com/SergeyMatveev/weatherapp.git']
+
+    #1
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-west1-docker.pkg.dev/bubbly-pillar-410707/ourbestrepo/data_collection', './data_collection']
+ 
+# Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-west1-docker.pkg.dev/bubbly-pillar-410707/ourbestrepo/data_collection']  
   
  # Set up kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -12,3 +20,5 @@ steps:
         gcloud container clusters get-credentials my-kukube-cluster --zone europe-west3-c --project bubbly-pillar-410707
         cd kubernetes
         kubectl apply -f .
+
+
