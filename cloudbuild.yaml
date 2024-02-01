@@ -1,7 +1,7 @@
 steps:
   # collecting files
   - name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/SergeyMatveev/weatherapp.git']
+    args: ['clone', 'https://github.com/SergeyMatveev/weatherapp.git']
   
  # Set up kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
